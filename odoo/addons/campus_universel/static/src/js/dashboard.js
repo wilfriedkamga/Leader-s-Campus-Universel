@@ -1,10 +1,12 @@
 import { registry } from "@web/core/registry";
-const { Component } = owl;
+const { Component, useState } = owl;
 
 export class CampusDashboard extends Component {
   setup() {
-    console.log("Campus Dashboard Loaded");
+    this.project_state = useState({
+      projects_count: 100,
+    });
   }
 }
-CampusDashboard.template="CampusDashboard"
+CampusDashboard.template = "CampusDashboard";
 registry.category("actions").add("campus_dashboard", CampusDashboard);
