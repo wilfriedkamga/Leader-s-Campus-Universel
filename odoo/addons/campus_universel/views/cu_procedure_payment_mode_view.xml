@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cu_procedure_payment_mode_action" model="ir.actions.act_window">
+        <field name="name">Mode de paiement</field>
+        <field name="res_model">campus_universel.procedure.payment_mode</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour ajouter un nouveau mode de payement.</p>
+        </field>
+    </record>
+
+    <record id="cu_procedure_payment_mode_form" model="ir.ui.view">
+        <field name="name">cu_procedure_payment_mode.form</field>
+        <field name="model">campus_universel.procedure.payment_mode</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+
+                </header>
+                <sheet>
+
+                    <group>
+                        <field name="name" />
+                        <field name="procedure_id" />
+                        <field name="payment_operation_ids">
+                            <list>
+                                <field name="name" />
+                                <field name="amount" />
+                            </list>
+                        </field>
+                        <field name="amount" />
+                    </group>
+                    <group>
+                        <field name="payment_method_ids">
+
+                            <kanban default_group_by="category_id">
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <field name="image" widget="image" class='oe_avatar' />
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

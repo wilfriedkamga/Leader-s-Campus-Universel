@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Estate Property</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="estate_property_kanban_view" />
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour définir un nouvel enregistrement.</p>
+        </field>
+    </record>
+
+    <record id="estate_property_kanban_view" model="ir.ui.view">
+        <field name="name">Estate Property kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_view">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            
+                            <group name="name" string="string">
+                                <h4>
+                                    <field name="name" />
+                                </h4>
+                                <div>
+                                 <field name="tag_ids"  widget="many2many_tags" />
+                                </div>
+                                <div>
+                                Expected Price :<field name="expected_price" /> FCFA
+                                </div>
+                                <div>
+                                Best price : <field name="best_price" /> FCFA
+                                </div>
+                                <div>
+                                 Seller price : <field name="selling_price" /> FCFA
+                                </div>
+                                 
+                            </group>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id='estate_property_offer_list' model="ir.ui.view">
+        <field name="name">estate offer list</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <list string="Channel" class='m-2 oe_center'>
+                <field name="partner" />
+                <field name="price" />
+                <field name="status" />
+
+                <button name="accepte_offer" type="object" title="Accepter l'offre"
+                    class="btn-primary" icon="fa-check" />
+                <button name="refuse_offer" type="object" title="refuser l'offre" class="btn-danger"
+                    icon="fa-times" />
+
+            </list>
+        </field>
+    </record>
+
+
+    <record id="estate_property_form_view" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form class='d-flex'>
+                <header>
+                    <button name="test_action" type="object" title="Accepter l'offre" string='Sold' />
+                    <button name="test_action" type="object" title="refuser l'offre" string='Cancel' />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="open,posted,confirm,sold" />
+                </header>
+                <sheet>
+                    <button string="TEST" name="test_action" type="object" class="oe_highlight" />
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                    <field name='tag_ids' widget="many2many_tags" decoration-success="1" />
+                    <group>
+                        <group>
+                            <field name="postcode" />
+                            <field name="date_availability" />
+                            <field name="type_id" widget='many2one'
+                                options="{'no_create': True, 'no_open': True}" />
+                            <field name='seller_id' />
+                        </group>
+                        <group>
+                            <field name="expected_price" />
+                            <field name="best_price" />
+                            <field name="selling_price" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="state" widget="statusbar"
+                                statusbar_visible="open,posted,confirm,sold" />
+                            <group>
+                                <field name="description" />
+                                <field name="facades" />
+                                <field name="bedrooms" />
+                                <field name="living_area" />
+                                <field name="garage" />
+                                <field name="garden" />
+                                <field name="garden_area" invisible='not garden' />
+                                <field name="garden_orientation" invisible='not garden' />
+                            </group>
+                        </page>
+                        <page string="Offers">
+                            <field name="offer_ids" readonly='state=="posted"'>
+                                <list editable="bottom">
+                                    <field name="sequence" widget='handle' />
+                                    <field name="name" />
+                                    <field name="price" />
+                                    <button name="accepte_offer" type="object"
+                                        title="Accepter l'offre" class="btn-primary" icon="fa-check"
+                                        invisible='status' />
+                                    <button name="refuse_offer" type="object"
+                                        title="refuser l'offre" class="btn-danger" icon="fa-times"
+                                        invisible='status' />
+                                    <field name="status" />
+                                    <field name="type_id" />
+
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description3">
+                            <group>
+                                <field name="garden" />
+                                <field name="garden_area" />
+                                <field name="garden_orientation" />
+
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='list_property' model="ir.ui.view">
+        <field name="name">crm.lost.reason.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Channel" decoration-success="garden==True"
+                decoration-primary="garden==False">
+                <field name="name" />
+                <field name="type_id" />
+                <field name="postcode" />
+                <field name="tag_ids" widget="many2many_tags" decoration-success="1" />
+                <field name="bedrooms" />
+                <field name="living_area" />
+                <field name="expected_price" />
+                <field name="selling_price" />
+                <field name="date_availability" optional='hide' />
+            </list>
+        </field>
+    </record>
+
+    <record id='model_name_view_search' model='ir.ui.view'>
+        <field name="name">crm.lost.reson.serach</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type='xml'>
+            <search string="texte">
+                <field name="name" />
+                <field name='postcode' />
+                <filter string="Archived" name="garage" domain="[('garage', '=', False)]" />
+                <field name="description" string="Name and description"
+                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_action_popup" model="ir.actions.client">
+        <field name="name">Action Name</field>
+        <field name="tag">action_tag_name</field>
+        <field name="params">{
+            "type": "info",
+            "title": "Message",
+            "message": "Bonjour !",
+            "sticky": False
+            }</field>
+    </record>
+
+</odoo>

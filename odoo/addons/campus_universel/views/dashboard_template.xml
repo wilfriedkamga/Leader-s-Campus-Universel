@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dashboard_template" name="Campus Dashboard">
+        <t t-call="web.layout">
+            <t t-set="title">Campus Universel - Dashboard</t>
+            <div class="o_control_panel">
+                <h1>Bienvenue sur le Dashboard de Campus Universel</h1>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card shadow-sm p-3">
+                            <h3>Total Étudiants</h3>
+                            <p><t t-esc="students_count"/></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card shadow-sm p-3">
+                            <h3>Total Professeurs</h3>
+                            <p><t t-esc="teachers_count"/></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card shadow-sm p-3">
+                            <h3>Cours en cours</h3>
+                            <p><t t-esc="courses_count"/></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

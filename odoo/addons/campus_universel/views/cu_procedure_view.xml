@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cu_procedure_action" model="ir.actions.act_window">
+        <field name="name">Type de procédures</field>
+        <field name="res_model">campus_universel.procedure</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
+    </record>
+
+    <record id="action_procedure_etape_kanban" model="ir.actions.act_window">
+        <field name="name">Étapes du Projet</field>
+        <field name="res_model">campus_universel.procedure.etape</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="cu_procedure_etape_kanban" />
+        <field name="domain">[('procedure_id', '=', active_id)]</field>
+    </record>
+
+    <record id="cu_procedure_form" model="ir.ui.view">
+        <field name="name">cu_procedure.form</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <form string="" class='d-flex'>
+                 <header>
+                   <button name="test_action"
+                                type="object"
+                                string="Imprimer"
+                                class="oe_highlight"
+                                icon="fa-print" />
+                 </header>
+                <sheet>
+                    <field name="drapeau_pays" widget="image" class='oe_avatar'
+                        options="{'preview_image': 'drapeau_pays'}" />
+                    <group>
+                        <field name="name" placeholder='Entrez le nom de la procédure' />
+                        <field name="cible_ids" widget='many2many_tags' />
+                        <field name="description" placeholder='Entrez la description de la procédure' />
+                        <field name="pays_id" />
+                        <field name="statut" />
+                        <field name="amount_min" />
+                        <field name="amount_max" />
+                        <field name="payment_mode_ids" widget='many2many_tags' />
+                    </group>
+                    <notebook>
+                        <page name="name" string="Étape du projet">
+                            <button name="%(cu_procedure_etape_action)s"
+                                type="action"
+                                string="Voir les Étapes"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+                        </page>
+                        <page name="name" string="Liste des documents neccéssaires">
+                            <button name="%(cu_procedure_etape_action)s"
+                                type="action"
+                                string="Voir les Étapes"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+                        </page>
+                        <page name="name" string="Détails des entrées et des sorities">
+                            <button name="%(cu_procedure_etape_action)s"
+                                type="action"
+                                string="Voir les Étapes"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_liste" model="ir.ui.view">
+        <field name="name">cu_procedure.list</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="cible_ids" widget='many2many_tags' />
+                <field name="pays_id" />
+                <field name="payment_mode_ids" widget='many2many_tags' />
+                <field name="drapeau_pays" widget="image" class='oe_avatar custom_image'
+                    options="{'preview_image': 'drapeau_pays'}" />
+
+            </list>
+        </field>
+    </record>
+
+</odoo>

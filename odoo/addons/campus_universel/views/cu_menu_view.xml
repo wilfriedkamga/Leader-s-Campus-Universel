@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Campus Universel"
+        id="campus_universel_menu"
+        groups=""
+        web_icon="campus_universel,static/description/icon.png"
+        sequence="0">
+        <menuitem id="campus_universel_procedure_menu" name="Procédures" groups="" sequence="1">
+            <menuitem id="menu_cu_procedure_action" action='cu_procedure_action'
+                sequence="15" />
+        </menuitem>
+
+        <menuitem id="campus_universel_enregistrement_menu" action='campus_universel_registration_action' name="Enregistrement" sequence="2"/>
+        <menuitem id="campus_universel_Traitement_menu" action='campus_universel_registration_action' name="Traitement" sequence="3"/>
+        <menuitem id="campus_universel_Dashboard_menu" action='action_campus_dashboard' name="Dashboard" sequence="4"/>
+        
+        <menuitem id="campus_universel_configuration_menu" name="Configuration" sequence="32">
+            <menuitem id="menu_cu_procedure_payment_mode_action"
+                action='cu_procedure_payment_mode_action' sequence="15" />
+            <menuitem id="menu_cu_procedure_payment_method_action"
+                action='cu_procedure_payment_method_action' sequence="15" />
+            <menuitem id="menu_cu_procedure_operation_method_action"
+                action='cu_procedure_payment_operation_action' sequence="15" />
+            <menuitem id="menu_cu_transaction_action"
+                action='cu_transaction_action' sequence="15" />
+            <menuitem id="menu_cu_procedure_cible_action"
+                action='cu_procedure_cible_action'
+                sequence="20" />
+            <menuitem id="menu_cu_procedure_pays_action"
+                action='cu_procedure_pays_action'
+                sequence="20" />
+            <menuitem id="menu_cu_procedure_etape_action"
+                action='cu_procedure_etape_action'
+                sequence="22" />
+            <menuitem id="menu_cu_procedure_phase_action"
+                action='cu_procedure_phase_action'
+                sequence="25" />
+        </menuitem>
+
+        <menuitem id="campus_universel_GestClient_menu" name="Mes Clients" sequence="30">
+            <menuitem id="menu_campus_universel_GestClient"
+                action='cu_procedure_action' sequence="15" />
+        </menuitem>
+
+        <menuitem id="campus_universel_client_menu" name="Suivre mon dossier" sequence="31">
+            <menuitem id="menu_campus_universel_client_menu"
+                action='cu_procedure_action' sequence="15" />
+        </menuitem>
+    </menuitem>
+
+
+</odoo>
