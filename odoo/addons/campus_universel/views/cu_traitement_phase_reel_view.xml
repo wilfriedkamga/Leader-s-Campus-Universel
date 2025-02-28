@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cu_traitement_phase_reel_action" model="ir.actions.act_window">
+        <field name="name">Phases Réels</field>
+        <field name="res_model">campus_universel.traitement.phase_reel</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour ajouter une nouvelle Étapes.</p>
+        </field>
+    </record>
+
+    
+    
+
+
+</odoo>

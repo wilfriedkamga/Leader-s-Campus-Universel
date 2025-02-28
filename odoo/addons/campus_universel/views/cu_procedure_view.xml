@@ -3,9 +3,20 @@
     <record id="cu_procedure_action" model="ir.actions.act_window">
         <field name="name">Type de procédures</field>
         <field name="res_model">campus_universel.procedure</field>
-        <field name="view_mode">list,form</field>
-        <field name="domain">[]</field>
-        <field name="context">{}</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="domain">[('nature','=','record')]</field>
+        <field name="context">{'default_nature':'record'}</field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
+    </record>
+
+    <record id="cu_procedure_action_trait" model="ir.actions.act_window">
+        <field name="name">Traitement</field>
+        <field name="res_model">campus_universel.procedure</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="domain">[('nature','=','template')]</field>
+        <field name="context">{'default_nature':'template'}</field>
         <field name="help" type="html">
             <p>Cette action permet d'afficher les procédures.</p>
         </field>
@@ -17,6 +28,18 @@
         <field name="view_mode">kanban</field>
         <field name="view_id" ref="cu_procedure_etape_kanban" />
         <field name="domain">[('procedure_id', '=', active_id)]</field>
+        <field name="context">{'default_procedure_id': active_id}</field>
+    </record>
+
+    <record id="action_procedure_etape_kanban2" model="ir.actions.act_window">
+        <field name="name">Étapes du Projet</field>
+        <field name="res_model">campus_universel.procedure.etape</field>
+        <field name="view_mode">kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
     </record>
 
     <record id="cu_procedure_form" model="ir.ui.view">
@@ -24,24 +47,47 @@
         <field name="model">campus_universel.procedure</field>
         <field name="arch" type="xml">
             <form string="" class='d-flex'>
-                 <header>
-                   <button name="test_action"
-                                type="object"
-                                string="Imprimer"
-                                class="oe_highlight"
-                                icon="fa-print" />
-                 </header>
+                <header>
+                    <button name="test_action"
+                        type="object"
+                        string="Imprimer"
+                        class="oe_highlight"
+                        icon="fa-print" />
+
+                    <button name="activate_procedure"
+                        type="object"
+                        string="Activé"
+                        class="oe_highlight"
+                        help='Activer la procédure la procédure'
+                    />
+                    <button name="create_procedure"
+                        type="object"
+                        string="Fermé"
+                        class="oe_highlight"
+                        help='Procédure en création' />
+                    <button name="block_procedure"
+                        type="object"
+                        string="Bloqué"
+                        class="oe_highlight"
+                        help='Bloquer la procédure' />
+
+
+                    <field name="statut" widget="statusbar"
+                        statusbar_visible="new,actif,block" />
+                </header>
                 <sheet>
                     <field name="drapeau_pays" widget="image" class='oe_avatar'
                         options="{'preview_image': 'drapeau_pays'}" />
                     <group>
                         <field name="name" placeholder='Entrez le nom de la procédure' />
-                        <field name="cible_ids" widget='many2many_tags' />
-                        <field name="description" placeholder='Entrez la description de la procédure' />
+                        <field name="cible_ids" widget='many2many_tags'
+                            options="{'color_field': 'color'}" />
+                        <field name="description"
+                            placeholder='Entrez la description de la procédure' />
                         <field name="pays_id" />
-                        <field name="statut" />
                         <field name="amount_min" />
                         <field name="amount_max" />
+                        <field name='nature'/>
                         <field name="payment_mode_ids" widget='many2many_tags' />
                     </group>
                     <notebook>
@@ -52,14 +98,34 @@
                                 class="oe_highlight"
                                 icon="fa-tasks" />
                         </page>
-                        <page name="name" string="Liste des documents neccéssaires">
-                            <button name="%(cu_procedure_etape_action)s"
-                                type="action"
-                                string="Voir les Étapes"
-                                class="oe_highlight"
-                                icon="fa-tasks" />
+                        <!-- 📄 Onglet Documents de la procédure -->
+                        <page string="Les documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="provenance" />
+                                    <field name="category" />
+                                    <field name="extension" />
+                                    <field name="url" />
+                                </list>
+                            </field>
                         </page>
-                        <page name="name" string="Détails des entrées et des sorities">
+
+                        <!-- ✅ Onglet Actions de la procédure -->
+                        <page string="Les actions">
+                            <field name="action_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <button name="1"
+                                    type="action"
+                                    string="Voir Tutoriels"
+                                    class="oe_highlight"
+                                    icon="fa-eye" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="name" string="entrées et des sorities">
                             <button name="%(cu_procedure_etape_action)s"
                                 type="action"
                                 string="Voir les Étapes"
@@ -71,6 +137,7 @@
             </form>
         </field>
     </record>
+
 
     <record id="cu_procedure_liste" model="ir.ui.view">
         <field name="name">cu_procedure.list</field>
@@ -85,6 +152,38 @@
                     options="{'preview_image': 'drapeau_pays'}" />
 
             </list>
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban" model="ir.ui.view">
+        <field name="name">cu_procedure.kanban</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+
+                    <t t-name="kanban-box">
+                        <div class='d-flex flex-row align-items-center gap-3 p-2'>
+                            <div class="d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;">
+                                <field name="drapeau_pays" widget="image"
+                                    class='oe_avatar custom_image'
+                                    options="{'preview_image': 'drapeau_pays'}" />
+                            </div>
+                            <div class="d-flex flex-column">
+                                <strong class='text-primary'>
+                                    <field name="name" />
+                                </strong>
+                                <field name="cible_ids" widget='many2many_tags'
+                                    options="{'color_field': 'color'}" class='mt-1' />
+                                <field name="pays_id" />
+                                <field name="color" widget="color_picker" />
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 

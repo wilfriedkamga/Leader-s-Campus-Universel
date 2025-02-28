@@ -8,3 +8,9 @@ from . import payment_operation
 from . import phase
 from . import etape
 from . import registration
+from . import document
+from . import action
+from . import tutoriel
+from . import traitement
+from . import etape_reel
+from . import phase_reel

@@ -10,10 +10,13 @@
                 sequence="15" />
         </menuitem>
 
-        <menuitem id="campus_universel_enregistrement_menu" action='campus_universel_registration_action' name="Enregistrement" sequence="2"/>
-        <menuitem id="campus_universel_Traitement_menu" action='campus_universel_registration_action' name="Traitement" sequence="3"/>
-        <menuitem id="campus_universel_Dashboard_menu" action='action_campus_dashboard' name="Dashboard" sequence="4"/>
-        
+        <menuitem id="campus_universel_enregistrement_menu"
+            action='campus_universel_registration_action' name="Enregistrement" sequence="2" />
+        <menuitem id="campus_universel_Traitement_menu" action='cu_procedure_action_trait'
+            name="Traitement" sequence="3" />
+        <menuitem id="campus_universel_Dashboard_menu" action='campus_universel_traitement_action'
+            name="Dashboard" sequence="4" />
+
         <menuitem id="campus_universel_configuration_menu" name="Configuration" sequence="32">
             <menuitem id="menu_cu_procedure_payment_mode_action"
                 action='cu_procedure_payment_mode_action' sequence="15" />
@@ -30,10 +33,16 @@
                 action='cu_procedure_pays_action'
                 sequence="20" />
             <menuitem id="menu_cu_procedure_etape_action"
-                action='cu_procedure_etape_action'
+                action='cu_procedure_etape_action2'
                 sequence="22" />
             <menuitem id="menu_cu_procedure_phase_action"
                 action='cu_procedure_phase_action'
+                sequence="25" />
+            <menuitem id="menu_cu_traitement_etape_reel_action"
+                action='cu_traitement_etape_reel_action1'
+                sequence="25" />
+            <menuitem id="menu_cu_traitement_phase_reel_action"
+                action='cu_traitement_phase_reel_action'
                 sequence="25" />
         </menuitem>
 

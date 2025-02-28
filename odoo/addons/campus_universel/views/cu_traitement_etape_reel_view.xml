@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cu_traitement_etape_reel_action" model="ir.actions.act_window">
+        <field name="name">Étapes Réels</field>
+        <field name="res_model">campus_universel.traitement.etape_reel</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('traitement_id', '=', active_id)]</field>
+        <field name="context">{'default_traitement_id': active_id}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour ajouter une nouvelle Étapes.</p>
+        </field>
+    </record>
+
+     <record id="cu_traitement_etape_reel_action1" model="ir.actions.act_window">
+        <field name="name">Étapes Réels</field>
+        <field name="res_model">campus_universel.traitement.etape_reel</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour ajouter une nouvelle Étapes.</p>
+        </field>
+    </record>
+
+    <record id="cu_traitement_etape_reel_kanban" model="ir.ui.view">
+        <field name="name">Étapes</field>
+        <field name="model">campus_universel.traitement.etape_reel</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color='color' default_group_by='phase_reel_id'>
+                <progressbar field="state" sum_field=""
+                    colors='{"on_track": "success", "at_risk": "warning", "off_track": "danger", "on_hold": "info", "done": "purple"}' />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class='oe_kanban_global_click'>
+                            <field name="name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="cu_traitement_etape_reel_form" model="ir.ui.view">
+    <field name="name">campus_universel.traitement.etape_reel.form</field>
+    <field name="model">campus_universel.traitement.etape_reel</field>
+    <field name="arch" type="xml">
+        <form string="Étape Réelle">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="traitement_id" />
+                        <field name="phase_reel_id"/>
+                    </group>
+                    <group>
+                        <field name="state" widget="statusbar" options="{'clickable': 'true'}"/>
+                        <field name="color"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+</odoo>

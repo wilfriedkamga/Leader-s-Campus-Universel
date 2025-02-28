@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action pour afficher les traitements -->
+    <record id="campus_universel_traitement_action" model="ir.actions.act_window">
+        <field name="name">Dossiers de Traitement</field>
+        <field name="res_model">campus_universel.traitement</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour voir les dossiers de traitement en cours.</p>
+        </field>
+    </record>
+
+    <record id="action_traitement_etape_reel_kanban" model="ir.actions.act_window">
+        <field name="name">Étapes du Projet</field>
+        <field name="res_model">campus_universel.traitement.etape_reel</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="cu_traitement_etape_reel_kanban" />
+        <field name="domain">[('traitement_id', '=', active_id)]</field>
+        <field name="context">{'default_traitement_id': active_id}</field>
+    </record>
+
+    <!-- Vue liste des traitements -->
+    <record id="view_traitement_list" model="ir.ui.view">
+        <field name="name">campus_universel.traitement.list</field>
+        <field name="model">campus_universel.traitement</field>
+        <field name="arch" type="xml">
+            <list string="Dossiers de Traitement">
+                <field name="name" />
+                <field name="last_name" />
+                <field name="procedureName" />
+                <field name="desired_country" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire du traitement -->
+    <record id="view_traitement_form" model="ir.ui.view">
+        <field name="name">campus_universel.traitement.form</field>
+        <field name="model">campus_universel.traitement</field>
+        <field name="arch" type="xml">
+            <form string="Dossier de Traitement">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="new,late,cancel" />
+                </header>
+                <sheet>
+                    <field name="photo" widget='image' class='oe_avatar mr-2' />
+                    <field name="flag" widget='image' class='oe_avatar' />
+
+                    <!-- Informations de la procédure -->
+                    <group >
+                        <field name="mat" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="last_name" />
+                            <field name="birthday" />
+                            <field name="gender" />
+                            <field name="nationality" />
+                            <field name="phone" />
+                            <field name="email" />
+                        </group>
+                        <group>
+                            <field name="procedureName" />
+                            <field name="description" />
+                            <field name="amount_min" />
+                            <field name="amount_max" />
+                         
+                        </group>
+
+                    </group>
+
+
+                    <notebook>
+
+
+                        <!-- Page 2 : Informations supplémentaires -->
+                        <page string="Informations supplémentaires">
+                            <group>
+                                <field name="info_source" />
+                                <field name="client_manager_name" />
+                                <field name="client_manager_contact" />
+                                <field name="travel_purpose" />
+                                <field name="study_level" />
+                                <field name="desired_country" />
+                            </group>
+                        </page>
+
+                        <!-- Page 3 : Étapes du projet -->
+                        <page string="Étapes du projet">
+                             <button name="%(action_traitement_etape_reel_kanban)s"
+                                type="action"
+                                string="Suivre l'evolution des Étapes"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+
+                             <button name="create_treatment_with_steps"
+                                type="object"
+                                string="Creer traitement"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+                        </page>
+
+                        <!-- Page 4 : Documents requis -->
+                        <page string="Documents">
+                            
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Kanban des traitements -->
+    <record id="view_traitement_kanban" model="ir.ui.view">
+        <field name="name">campus_universel.traitement.kanban</field>
+        <field name="model">campus_universel.traitement</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong t-esc="record.name.value" />
+                            <t t-esc="record.last_name.value" />
+                            <div>
+                                <small>Procédure : <t t-esc="record.procedureName.value" /></small>
+                            </div>
+                            <div>
+                                <small>Pays : <t t-esc="record.desired_country.value" /></small>
+                            </div>
+                            <div>
+                                <small>État : <t t-esc="record.state.value" /></small>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

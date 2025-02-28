@@ -11,4 +11,30 @@
             <p>Cliquez ici pour ajouter une nouvelle cible pour les procédures.</p>
         </field>
     </record>
+
+    <record id="cu_procedure_cible_form" model="ir.ui.view">
+        <field name="name">model_name.view.form</field>
+        <field name="model">campus_universel.procedure.cible</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name='color' widget='color_picker' />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_cible_tree" model="ir.ui.view">
+        <field name="name">model_name.view.tree</field>
+        <field name="model">campus_universel.procedure.cible</field>
+        <field name="arch" type="xml">
+            <list string="Cibles" editable="top" sample="1" multi_edit="1" default_order="name">
+                <field name="name" />
+                <field name='color' widget='color_picker' optional="show" />
+            </list>
+        </field>
+    </record>
 </odoo>

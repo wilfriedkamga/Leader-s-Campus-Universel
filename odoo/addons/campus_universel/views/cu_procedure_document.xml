@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action pour afficher les documents -->
+    <record id="cu_procedure_document_action" model="ir.actions.act_window">
+        <field name="name">Documents requis</field>
+        <field name="res_model">campus_universel.procedure.document</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>Cliquez ici pour ajouter un nouveau document requis pour une étape.</p>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="cu_procedure_document_form_view" model="ir.ui.view">
+        <field name="name">cu_procedure_document.form</field>
+        <field name="model">campus_universel.procedure.document</field>
+        <field name="arch" type="xml">
+            <form string="Document Requis">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="etape_id"/>
+                        <field name="provenance"/>
+                        <field name="category"/>
+                        <field name="extension"/>
+                        <field name="url"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste -->
+    <record id="cu_procedure_document_tree_view" model="ir.ui.view">
+        <field name="name">cu_procedure_document.tree</field>
+        <field name="model">campus_universel.procedure.document</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="etape_id"/>
+                <field name="provenance"/>
+                <field name="category"/>
+                <field name="extension"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Kanban -->
+    <record id="cu_procedure_document_kanban_view" model="ir.ui.view">
+        <field name="name">cu_procedure_document.kanban</field>
+        <field name="model">campus_universel.procedure.document</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span>Catégorie : <field name="category"/></span><br/>
+                                <span>Provenance : <field name="provenance"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
