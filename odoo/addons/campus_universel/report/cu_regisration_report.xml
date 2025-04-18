@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Définition du rapport -->
+    <report 
+        id="report_registration_template"
+        model="campus_universel.procedure"
+        string="Bon d'Enregistrement"
+        report_type="qweb-pdf"
+        name="campus_universel.report_registration_template"
+        print_report_name="(object.name and 'Bon_Enregistrement_' + object.name) or 'Bon_Enregistrement'"
+        attachment_use="False"
+    />
+    
+    <!-- Action du rapport -->
+    <record id="action_report_registration" model="ir.actions.report">
+        <field name="name">Bon d'Enregistrement</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">campus_universel.report_registration_template</field>
+    </record>
+
+    <!-- Ajout du bouton "Imprimer" dans la vue formulaire -->
+    <record id="campus_registration_form_view_inherit" model="ir.ui.view">
+        <field name="name">campus_universel.registration.form.inherit.report</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="inherit_id" ref="campus_universel.cu_procedure_form_registration" />  <!-- Vérifiez l'ID existant -->
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="print_registration_report"
+                        string="Imprimer Bon d'Enregistrement"
+                        type="object"
+                        class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

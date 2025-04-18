@@ -5,7 +5,6 @@
         <field name="name">Estate Property</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">list,kanban,form</field>
-        <field name="view_id" ref="estate_property_kanban_view" />
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
@@ -21,24 +20,18 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
-                            
+
                             <group name="name" string="string">
                                 <h4>
                                     <field name="name" />
                                 </h4>
                                 <div>
-                                 <field name="tag_ids"  widget="many2many_tags" />
+                                    <field name="tag_ids" widget="many2many_tags" />
                                 </div>
-                                <div>
-                                Expected Price :<field name="expected_price" /> FCFA
-                                </div>
-                                <div>
-                                Best price : <field name="best_price" /> FCFA
-                                </div>
-                                <div>
-                                 Seller price : <field name="selling_price" /> FCFA
-                                </div>
-                                 
+                                <div> Expected Price :<field name="expected_price" /> FCFA </div>
+                                <div> Best price : <field name="best_price" /> FCFA </div>
+                                <div> Seller price : <field name="selling_price" /> FCFA </div>
+
                             </group>
 
                         </div>
@@ -80,14 +73,16 @@
                 </header>
                 <sheet>
                     <button string="TEST" name="test_action" type="object" class="oe_highlight" />
-                    <h1>
-                        <field name="name" />
-                    </h1>
-                    <field name='tag_ids' widget="many2many_tags" decoration-success="1" />
                     <group>
                         <group>
+                            <h1>
+                                <field name="name" />
+                            </h1>
                             <field name="postcode" />
                             <field name="date_availability" />
+                            <field name="state" />
+                            <field name="description" />
+                            <field name='tag_ids' widget="many2many_tags" decoration-success="1" />
                             <field name="type_id" widget='many2one'
                                 options="{'no_create': True, 'no_open': True}" />
                             <field name='seller_id' />
@@ -109,6 +104,7 @@
                                 <field name="living_area" />
                                 <field name="garage" />
                                 <field name="garden" />
+
                                 <field name="garden_area" invisible='not garden' />
                                 <field name="garden_orientation" invisible='not garden' />
                             </group>
@@ -119,6 +115,7 @@
                                     <field name="sequence" widget='handle' />
                                     <field name="name" />
                                     <field name="price" />
+                                    <field name="partner_id" />
                                     <button name="accepte_offer" type="object"
                                         title="Accepter l'offre" class="btn-primary" icon="fa-check"
                                         invisible='status' />

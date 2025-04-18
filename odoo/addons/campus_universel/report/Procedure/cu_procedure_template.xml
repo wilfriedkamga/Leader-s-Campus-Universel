@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_procedure_template">
+        <t t-call="web.external_layout">
+            <!-- ✅ Définition de la variable `docs` pour récupérer les enregistrements -->
+            <t t-set="docs" t-value="doc_ids and env['campus_universel.procedure'].browse(doc_ids) or []"/>
+
+            <main>  <!-- ✅ Ajout de la balise <main> -->
+                <div class="page">
+                    <div class="text-center">
+                        <h2 style="color:#0B5394;">Présentation de la procédure Étude en France</h2>
+                    </div>
+
+                    <t t-foreach="docs" t-as="procedure">  <!-- 🔹 Utilisation de `procedure` au lieu de `object` -->
+                        <p><strong>Date :</strong> <t t-esc="procedure.last_name"/></p>
+
+                        <h3 style="border-bottom: 2px solid #0B5394; padding-bottom: 5px;">Informations personnelles</h3>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Nom :</strong> <t t-esc="procedure.last_name or ''"/></td>
+                                <td><strong>Prénom :</strong> <t t-esc="procedure.name2 or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email :</strong> <t t-esc="procedure.email or ''"/></td>
+                                <td><strong>Téléphone :</strong> <t t-esc="procedure.phone or ''"/></td>
+                            </tr>
+                        </table>
+
+                        <h3 style="border-bottom: 2px solid #0B5394; padding-bottom: 5px;">Procédure et Étapes</h3>
+                        <p><strong>Nom de la procédure :</strong> <t t-esc="procedure.name"/></p>
+                        <p><strong>Description :</strong> <t t-esc="procedure.description or 'N/A'"/></p>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Phase</th>
+                                    <th>Étape</th>
+                                    <th>Coût</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="procedure.etape_ids" t-as="etape">
+                                    <tr>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="text-right" style="margin-top: 40px;">
+                            <p><strong>Signature du Responsable :</strong></p>
+                            <p>________________________</p>
+                        </div>
+
+                        <hr/>  <!-- Séparation entre les enregistrements -->
+                    </t>
+                </div>
+            </main>  <!-- ✅ Fermeture de <main> -->
+        </t>
+    </template>
+</odoo>

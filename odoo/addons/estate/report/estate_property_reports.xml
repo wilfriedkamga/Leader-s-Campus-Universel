@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Définition du rapport -->
+    <report
+        id="report_estate_property_offer"
+        model="estate.property"
+        string="Property Offers Report"
+        report_type="qweb-pdf"
+        name="estate.report_estate_property_offer"
+        file="estate.report.estate_property_templates"
+        print_report_name="(object.name and 'Property_Offers_Report_' + object.name) or 'Property_Offers_Report'"
+    />
+
+    <!-- Action du rapport -->
+    <record id="action_report_estate_property_offer" model="ir.actions.report">
+        <field name="name">Offres de propriété</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">estate.report_estate_property_offer</field>
+    </record>
+
+    <!-- Ajout du bouton "Imprimer" dans la vue formulaire -->
+    <record id="estate_property_form_view_inherit" model="ir.ui.view">
+        <field name="name">estate.property.form.inherit.report</field>
+        <field name="model">estate.property</field>
+        <field name="inherit_id" ref="estate.estate_property_form_view" />  <!-- Vérifiez l'ID
+        existant -->
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+
+                <button name="print_property_offers_report"
+                    string="Imprimer Offres"
+                    type="object"
+                    class="btn-primary" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

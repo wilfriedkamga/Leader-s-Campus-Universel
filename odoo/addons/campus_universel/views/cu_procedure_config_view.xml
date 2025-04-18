@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Niveau d'étude -->
+    <record id="cu_procedure_niveau_etude_action" model="ir.actions.act_window">
+        <field name="name">Niveau d'étude</field>
+        <field name="res_model">campus_universel.procedure.niveau_etude</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="cu_procedure_niveau_etude_form" model="ir.ui.view">
+        <field name="name">cu_procedure_niveau_etude.form</field>
+        <field name="model">campus_universel.procedure.niveau_etude</field>
+        <field name="arch" type="xml">
+            <form string="Niveau d'étude">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_niveau_etude_list" model="ir.ui.view">
+        <field name="name">cu_procedure_niveau_etude.list</field>
+        <field name="model">campus_universel.procedure.niveau_etude</field>
+        <field name="arch" type="xml">
+            <list string="Niveau d'étude">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Filière -->
+    <record id="cu_procedure_filiere_action" model="ir.actions.act_window">
+        <field name="name">Filière</field>
+        <field name="res_model">campus_universel.procedure.filiere</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="cu_procedure_filiere_form" model="ir.ui.view">
+        <field name="name">cu_procedure_filiere.form</field>
+        <field name="model">campus_universel.procedure.filiere</field>
+        <field name="arch" type="xml">
+            <form string="Filière">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="group" />
+                        <field name='color' widget='color_picker' />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_filiere_list" model="ir.ui.view">
+        <field name="name">cu_procedure_filiere.list</field>
+        <field name="model">campus_universel.procedure.filiere</field>
+        <field name="arch" type="xml">
+            <list string="Filière">
+                <field name="name" />
+                <field name='color' widget='color_picker' />
+            </list>
+        </field>
+    </record>
+
+    <!-- Diplôme -->
+    <record id="cu_procedure_diplome_action" model="ir.actions.act_window">
+        <field name="name">Diplôme</field>
+        <field name="res_model">campus_universel.procedure.diplome</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="cu_procedure_diplome_form" model="ir.ui.view">
+        <field name="name">cu_procedure_diplome.form</field>
+        <field name="model">campus_universel.procedure.diplome</field>
+        <field name="arch" type="xml">
+            <form string="Diplôme">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_diplome_list" model="ir.ui.view">
+        <field name="name">cu_procedure_diplome.list</field>
+        <field name="model">campus_universel.procedure.diplome</field>
+        <field name="arch" type="xml">
+            <list string="Diplôme">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Motif de voyage -->
+    <record id="cu_procedure_motif_voyage_action" model="ir.actions.act_window">
+        <field name="name">Motif de voyage</field>
+        <field name="res_model">campus_universel.procedure.motif_voyage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="cu_procedure_motif_voyage_form" model="ir.ui.view">
+        <field name="name">cu_procedure_motif_voyage.form</field>
+        <field name="model">campus_universel.procedure.motif_voyage</field>
+        <field name="arch" type="xml">
+            <form string="Motif de voyage">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_motif_voyage_list" model="ir.ui.view">
+        <field name="name">cu_procedure_motif_voyage.list</field>
+        <field name="model">campus_universel.procedure.motif_voyage</field>
+        <field name="arch" type="xml">
+            <list string="Motif de voyage">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Mention -->
+    <record id="cu_procedure_mention_action" model="ir.actions.act_window">
+        <field name="name">Mention</field>
+        <field name="res_model">campus_universel.procedure.mention</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="cu_procedure_mention_form" model="ir.ui.view">
+        <field name="name">cu_procedure_mention.form</field>
+        <field name="model">campus_universel.procedure.mention</field>
+        <field name="arch" type="xml">
+            <form string="Mention">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_mention_list" model="ir.ui.view">
+        <field name="name">cu_procedure_mention.list</field>
+        <field name="model">campus_universel.procedure.mention</field>
+        <field name="arch" type="xml">
+            <list string="Mention">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <!--Affichage
+    des utilisateurs de la plateforme-->
+
+    <!-- Action pour les Administrateurs -->
+    <record id="action_users_administrateurs" model="ir.actions.act_window">
+        <field name="name">Administrateurs</field>
+        <field name="res_model">res.groups</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Action pour les Agents -->
+    <record id="action_users_agents" model="ir.actions.act_window">
+        <field name="name">Agents</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Action pour les Gestionnaires Clients -->
+    <record id="action_users_gestclients" model="ir.actions.act_window">
+        <field name="name">Gestionnaires Clients</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('group_agent_campus_id','=',True)]</field>
+        <field name="context">
+            {
+            'form_view_ref': 'campus_universel.view_users_gestclients_form',
+            'list_view_ref': 'campus_universel.view_users_gestclients_tree'
+            }
+        </field>
+    </record>
+    <!-- Vue Liste -->
+    <record id="view_users_gestclients_tree" model="ir.ui.view">
+        <field name="name">res.users.gestclients.tree</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <list string="Gestionnaires Clients">
+                <field name="name" />
+                <field name="nb_clients" string='Clients' />
+                <field name="nb_prospects" string='Prospect' />
+                <field name="nb_clients_af" string='Clients affectés' />
+                <field name="group_agent_campus_id" />
+                <button name="test_action"
+                    type="object"
+                    string=""
+                    class="oe_highlight"
+                    icon="fa-plus" />
+                <button name="test_action"
+                    type="object"
+                    string=""
+                    class="oe_highlight"
+                    icon="fa-minus" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue Formulaire -->
+    <record id="view_users_gestclients_form" model="ir.ui.view">
+        <field name="name">res.users.gestclients.form</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <form string="Gestionnaires Clients">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="login" />
+                        <field name="commercial_id" />
+                        <field name="group_agent_campus_id" />
+                        <field name="email" />
+                        <field name="procedure_ids" />
+                        <field name="groups_id" widget="many2many_tags"
+                            options="{'no_create': True}" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Action pour les Clients -->
+    <record id="action_users_clients" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <!--<field
+        name="domain">[('groups_id', 'in', [ref('group_client_campus')])]</field>
+        <field name="context">{'default_groups_id': [(6, 0, [ref('group_client_campus')])]}</field>-->
+
+    </record>
+
+    <!-- Action pour les Caissières -->
+    <record id="action_users_caissieres" model="ir.actions.act_window">
+        <field name="name">Caissières</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="domain">[('groups_id', 'in',
+            [user.env.user.has_group('group_caissiere_campus')])]</field>
+        <field name="context">{'default_groups_id': [(6, 0,
+            [user.env.user.has_group('group_caissiere_campus')])]}</field>
+
+    </record>
+
+    <!-- Action pour les Secrétaires -->
+    <record id="action_users_secretaires" model="ir.actions.act_window">
+        <field name="name">Secrétaires</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <!--<field
+        name="domain">[('groups_id', 'in', [ref('group_secretaire_campus')])]</field>
+        <field name="context">{'default_groups_id': [(6, 0, [ref('group_secretaire_campus')])]}</field>-->
+    </record>
+
+</odoo>

@@ -2,22 +2,27 @@
 <odoo>
     <menuitem name="Campus Universel"
         id="campus_universel_menu"
-        groups=""
         web_icon="campus_universel,static/description/icon.png"
         sequence="0">
-        <menuitem id="campus_universel_procedure_menu" name="Procédures" groups="" sequence="1">
-            <menuitem id="menu_cu_procedure_action" action='cu_procedure_action'
-                sequence="15" />
-        </menuitem>
+        <menuitem id="campus_universel_procedure_menu"
+            groups="campus_universel.group_administrateur_campus" action='cu_procedure_action'
+            name="Procédures" sequence="1" />
 
         <menuitem id="campus_universel_enregistrement_menu"
-            action='campus_universel_registration_action' name="Enregistrement" sequence="2" />
-        <menuitem id="campus_universel_Traitement_menu" action='cu_procedure_action_trait'
-            name="Traitement" sequence="3" />
-        <menuitem id="campus_universel_Dashboard_menu" action='campus_universel_traitement_action'
-            name="Dashboard" sequence="4" />
+            action='cu_procedure_action_registration'
+            groups="campus_universel.group_administrateur_campus,group_secretaire_campus,group_caissiere_campus"
+            name="Enregistrement" sequence="2" />
 
-        <menuitem id="campus_universel_configuration_menu" name="Configuration" sequence="32">
+        <menuitem id="campus_universel_Traitement_menu"
+            groups="campus_universel.group_administrateur_campus,campus_universel.group_agent_campus,campus_universel.group_caissiere_campus"
+            action='cu_procedure_action_trait'
+            name="Traitement" sequence="3" />
+
+        <menuitem id="campus_universel_Dashboard_menu" action='cu_procedure_action_registration'
+            name="Dashboard" groups="campus_universel.group_administrateur_campus" sequence="30" />
+
+        <menuitem id="campus_universel_configuration_menu"
+            groups="campus_universel.group_administrateur_campus" name="Configuration" sequence="32">
             <menuitem id="menu_cu_procedure_payment_mode_action"
                 action='cu_procedure_payment_mode_action' sequence="15" />
             <menuitem id="menu_cu_procedure_payment_method_action"
@@ -38,24 +43,77 @@
             <menuitem id="menu_cu_procedure_phase_action"
                 action='cu_procedure_phase_action'
                 sequence="25" />
-            <menuitem id="menu_cu_traitement_etape_reel_action"
-                action='cu_traitement_etape_reel_action1'
-                sequence="25" />
-            <menuitem id="menu_cu_traitement_phase_reel_action"
-                action='cu_traitement_phase_reel_action'
-                sequence="25" />
+            <menuitem id="menu_cu_procedure_commercial_action"
+                action='cu_procedure_commercial_action'
+                sequence="26" />
+            <menuitem id="menu_cu_procedure_niveau_etude_action"
+                action="cu_procedure_niveau_etude_action"
+                sequence="27" />
+
+            <menuitem id="menu_cu_procedure_filiere_action"
+                action="cu_procedure_filiere_action"
+                sequence="28" />
+
+            <menuitem id="menu_cu_procedure_diplome_action"
+                action="cu_procedure_diplome_action"
+                sequence="29" />
+
+            <menuitem id="menu_cu_procedure_motif_voyage_action"
+                action="cu_procedure_motif_voyage_action"
+                sequence="30" />
+
+            <menuitem id="menu_cu_procedure_mention_action"
+                action="cu_procedure_mention_action"
+                sequence="31" />
+
+        </menuitem>
+        <menuitem id="menu_campus_users"
+            name="Super Gestionnaire"
+            groups="campus_universel.group_super_gestionnaire_campus"
+            sequence="10">
+            
+            <menuitem id="menu_users_agents"
+                name="Agents"
+                action="action_users_agents" />
+
+            <menuitem id="menu_users_gestclients"
+                name="Gestionnaires Clients"
+                action="action_users_gestclients" />
+            <menuitem id="menu_users_clients"
+                name="Clients"
+                action="cu_procedure_action_trait" />
+            <menuitem id="menu_users_prospect"
+                name="Mes Prospects"
+                action="cu_procedure_action_registration" />
+
+            <menuitem id="menu_users_caissieres"
+                name="Caissières"
+                action="action_users_caissieres" />
+
+            <menuitem id="menu_users_secretaires"
+                name="Secrétaires"
+                action="action_users_secretaires" />
         </menuitem>
 
-        <menuitem id="campus_universel_GestClient_menu" name="Mes Clients" sequence="30">
-            <menuitem id="menu_campus_universel_GestClient"
-                action='cu_procedure_action' sequence="15" />
+        <!-- Sous-menus pour chaque groupe -->
+
+
+        <menuitem id="campus_universel_GestClient_menu"
+            groups="campus_universel.group_gestclient_campus"
+            name="Gestionnaire client" sequence="30">
+            <menuitem id="menu_users_caissieres"
+                name="Mes Prospects"
+                action="cu_procedure_action_registration" />
+
+            <menuitem id="menu_users_secretaires"
+                name="Mes clients"
+                action="cu_procedure_action_trait" />
         </menuitem>
 
-        <menuitem id="campus_universel_client_menu" name="Suivre mon dossier" sequence="31">
-            <menuitem id="menu_campus_universel_client_menu"
-                action='cu_procedure_action' sequence="15" />
-        </menuitem>
+        <menuitem id="campus_universel_client_menu" groups="campus_universel.group_client_campus"
+            action="cu_procedure_action_client"
+            name="Suivre mon dossier" sequence="31" />
+
+
     </menuitem>
-
-
 </odoo>

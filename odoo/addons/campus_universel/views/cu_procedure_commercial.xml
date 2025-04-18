@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="cu_procedure_pays_action" model="ir.actions.act_window">
-        <field name="name">Pays</field>
-        <field name="res_model">campus_universel.procedure.pays</field>
+    <record id="cu_procedure_commercial_action" model="ir.actions.act_window">
+        <field name="name">Commerciaux</field>
+        <field name="res_model">campus_universel.procedure.commercial</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
@@ -12,16 +12,20 @@
         </field>
     </record>
 
-    <record id="cu_procedure_pays_form" model="ir.ui.view">
+    <record id="cu_procedure_commercial_form" model="ir.ui.view">
         <field name="name">cu_procedure_pays.form</field>
-        <field name="model">campus_universel.procedure.pays</field>
+        <field name="model">campus_universel.procedure.commercial</field>
         <field name="arch" type="xml">
             <form string="">
-
                 <sheet>
-                   <field name="flag" widget='image' class='oe_avatar' />
                     <group>
                         <field name="name" />
+                        <field name="birthday" />
+                        <field name="phone" />
+                        <field name="is_gestClient" />
+                        <field name="contrat" />
+                        <field name="procedure_ids" />
+                        <field name="gest_client_id" />
                     </group>
                 </sheet>
             </form>
@@ -30,12 +34,14 @@
 
     <record id="_tree" model="ir.ui.view">
         <field name="name">cu_procedure_pays.list</field>
-        <field name="model">campus_universel.procedure.pays</field>
+        <field name="model">campus_universel.procedure.commercial</field>
         <field name="arch" type="xml">
             <list string="">
                 <field name="name" />
-                <field name="flag"/>
-                <field name="procedure_ids" />
+                <field name="birthday" />
+                <field name="phone" />
+                <field name="is_gestClient" />
+
             </list>
         </field>
     </record>

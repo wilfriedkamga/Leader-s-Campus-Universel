@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_estate_property_offer">
+        <t t-call="web.html_container">
+            <t t-set="doc" t-value="doc_ids and env['estate.property'].browse(doc_ids) or []"/>
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="text-align: center;">Rapport des Offres de Propriété</h2>
+                    <t t-foreach="doc" t-as="property">
+                        <h3><t t-esc="property.name"/></h3>
+                        <p><strong>Prix attendu :</strong> <t t-esc="property.expected_price"/> €</p>
+                        <p><strong>Prix de vente :</strong> <t t-esc="property.selling_price or 'Non vendu'"/> €</p>
+
+                        <t t-if="property.offer_ids">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Offreur</th>
+                                        <th>Montant de l'offre</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="property.offer_ids" t-as="offer">
+                                        <tr>
+                                            <td><t t-esc="offer.partner_id.name"/></td>
+                                            <td><t t-esc="offer.price"/> €</td>
+                                            <td>
+                                                <t t-if="offer.status == 'accepted'">✅ Acceptée</t>
+                                                <t t-if="offer.status == 'refused'">❌ Refusée</t>
+                                               
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-if="not property.offer_ids">
+                            <p style="color: red;">Aucune offre n'a été faite pour cette propriété.</p>
+                        </t>
+                        <hr/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

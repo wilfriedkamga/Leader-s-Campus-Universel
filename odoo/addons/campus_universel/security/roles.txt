@@ -1,0 +1,4 @@
+group_agent_campus
+group_gestclient_campus
+group_client_campus
+group_caissiere_campus

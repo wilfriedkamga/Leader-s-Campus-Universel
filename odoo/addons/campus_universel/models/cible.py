@@ -16,5 +16,6 @@ class ProcedureCible(models.Model):
      
     color = fields.Integer(string='Color', default=_get_default_color,
         help="Transparent tags are not visible in the kanban view of your projects and tasks.")
+    
 
     

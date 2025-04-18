@@ -34,11 +34,11 @@
         <field name="name">cu_procedure_action.tree</field>
         <field name="model">campus_universel.procedure.action</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="etape_id"/>
                 <field name="description"/>
-            </tree>
+            </list>
         </field>
     </record>
 

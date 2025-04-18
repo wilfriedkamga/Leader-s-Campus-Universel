@@ -11,13 +11,6 @@ class ProcedureEtapeReel(models.Model):
     color = fields.Integer(string="Color")
     state = fields.Selection([('wait', 'En attente'),('start', 'En cours'),('end', 'Terminé'),('cancel','Annulé')])
     progress = fields.Float(default=0.0,store=True)
-    traitement_id = fields.Many2one(
-        'campus_universel.traitement',
-        string='Traitement',required=True
-        )
-    phase_reel_id = fields.Many2one(
-        'campus_universel.traitement.phase_reel',
-        string='Phase',
-        )
+    
 
     

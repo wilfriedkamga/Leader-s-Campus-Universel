@@ -2,7 +2,7 @@
     <data noupdate="1">
         <record id="seq_cu_traitement" model="ir.sequence">
             <field name="name">Numéro de Dossier Traitement</field>
-            <field name="code">cu.traitement.sequence</field>
+            <field name="code">campus_universel.registration</field>
             <field name="prefix">CU</field>
             <field name="padding">8</field>
             <field name="number_next">1</field>

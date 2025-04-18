@@ -94,6 +94,12 @@ class Registration(models.Model):
         # Le rapport peut maintenant être généré pour l'enregistrement spécifique
         return True
     
+    @api.model
+    def create(self, values):
+        result = super().create(values)
+        
+        return result
+    
     def action_create_treatment(self):
         self.ensure_one()  # Vérifie qu'un seul enregistrement est sélectionné
 

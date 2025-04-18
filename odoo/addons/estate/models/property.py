@@ -19,16 +19,12 @@ class EstateProperty(models.Model):
     garage = fields.Boolean(string="Garage Disponible")
     garden = fields.Boolean(string="Jardin Disponible")
     garden_area = fields.Integer(string="Surface du Jardin")
-    state = fields.Selection(string='Status', required=True, readonly=True, copy=False, selection=[
+    state = fields.Selection(string='Status', required=True, selection=[
             ('open', 'NEW'),
             ('posted', 'OFFER RECEIVED'),
             ('confirm', 'OFFER ACCEPTED'),
             ('sold', 'SOLD'),
-        ], default='open',
-        help="The current state of your bank statement:"
-             "- New: Fully editable with draft Journal Entries."
-             "- Processing: No longer editable with posted Journal entries, ready for the reconciliation."
-             "- Validated: All lines are reconciled. There is nothing left to process.")
+        ])
     garden_orientation = fields.Selection([
         ('north', 'Nord'),
         ('south', 'Sud'),
@@ -79,3 +75,6 @@ class EstateProperty(models.Model):
         vals['state']='posted'
         # Then call super to execute the parent method
         return super().create(vals)
+    
+    def print_property_offers_report(self):
+        return self.env.ref('estate.action_report_estate_property_offer').report_action(self)

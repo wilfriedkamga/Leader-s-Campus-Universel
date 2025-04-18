@@ -24,6 +24,9 @@
 
                     <group>
                         <field name="name" />
+                        <field name="label"/>
+                        <field name="display_name"/>
+                        <field name="search_display_name"/>
                         <field name="procedure_id" />
                         <field name="payment_operation_ids">
                             <list>

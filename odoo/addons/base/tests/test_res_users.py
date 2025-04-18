@@ -426,7 +426,7 @@ class TestUsersGroupWarning(TransactionCase):
         categ_timesheets = IrModuleCategory.create({'name': 'Timesheets'})
 
         # Sales
-        cls.group_sales_user, cls.group_sales_administrator = ResGroups.create([
+        cls.group_sales_user, cls.group_sales_administrator = .create([
             {'name': 'User: All Documents', 'category_id': categ_sales.id},
             {'name': 'Administrator', 'category_id': categ_sales.id},
         ])

@@ -9,6 +9,7 @@ class EstatePropertyOffer(models.Model):
     sequence = fields.Integer(string="Sequence", default=10)
     price  = fields.Float(string='Prix')
     partner  = fields.Char(string='Partenaire')
+    partner_id = fields.Many2one('res.partner', string="Acheteur", required=True)
     status  = fields.Selection([('Refused', 'Refused'),('Accepted','Accepted')])
     property_id = fields.Many2one(
         'estate.property',

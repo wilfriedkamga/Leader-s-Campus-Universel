@@ -30,3 +30,7 @@ class ProcedureAction(models.Model):
         """Récupérer la procédure associée à partir de l'étape"""
         for action in self:
             action.procedure_id = action.etape_id.procedure_id if action.etape_id else False
+    
+    def download_tutoriel(self):
+        for record in self:
+            record.name_search=''

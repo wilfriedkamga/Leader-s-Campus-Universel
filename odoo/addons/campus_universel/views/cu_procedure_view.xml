@@ -1,22 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="cu_procedure_action" model="ir.actions.act_window">
-        <field name="name">Type de procédures</field>
+    <record id="cu_procedure_action_trait" model="ir.actions.act_window">
+        <field name="name">Traitement</field>
         <field name="res_model">campus_universel.procedure</field>
         <field name="view_mode">kanban,form</field>
         <field name="domain">[('nature','=','record')]</field>
-        <field name="context">{'default_nature':'record'}</field>
+        <field name="context">
+            {'default_nature': 'record',
+            'form_view_ref': 'campus_universel.cu_procedure_form_record',
+            'kanban_view_ref':'campus_universel.cu_procedure_kanban_record',
+            'list_view_ref': 'campus_universel.cu_procedure_list_record'}
+        </field>
         <field name="help" type="html">
             <p>Cette action permet d'afficher les procédures.</p>
         </field>
     </record>
 
-    <record id="cu_procedure_action_trait" model="ir.actions.act_window">
-        <field name="name">Traitement</field>
+    <record id="cu_procedure_action_registration" model="ir.actions.act_window">
+        <field name="name">Enregistrement</field>
         <field name="res_model">campus_universel.procedure</field>
-        <field name="view_mode">kanban,form</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('nature','=','registration')]</field>
+        <field name="context">
+            {'default_nature':'registration',
+            'form_view_ref': 'campus_universel.cu_procedure_form_registration',
+            'kanban_view_ref': 'campus_universel.cu_procedure_kanban_registration',
+            'list_view_ref': 'campus_universel.cu_procedure_list_registration'}
+        </field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
+    </record>
+
+    <record id="cu_procedure_action_gest" model="ir.actions.act_window">
+        <field name="name">Enregistrement</field>
+        <field name="res_model">campus_universel.procedure</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('nature','=','gest')]</field>
+        <field name="context">
+            {'default_nature':'gest',
+            'form_view_ref': 'campus_universel.cu_procedure_form_gest',
+            'kanban_view_ref': 'campus_universel.cu_procedure_kanban_gest',
+            'list_view_ref': 'campus_universel.cu_procedure_list_gest'}
+        </field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
+    </record>
+
+    <record id="cu_procedure_action_client" model="ir.actions.act_window">
+        <field name="name">Mon dossier</field>
+        <field name="res_model">campus_universel.procedure</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('nature','=','record'),('user_id', '=', uid)]</field>
+        <field name="context">
+            {'default_nature':'client',
+            'form_view_ref': 'campus_universel.cu_procedure_form_client',
+            'kanban_view_ref': 'campus_universel.cu_procedure_kanban_client',
+            'list_view_ref': 'campus_universel.cu_procedure_list_client'}
+        </field>
+        <field name="help" type="html">
+            <p>Cette action permet d'afficher les procédures.</p>
+        </field>
+    </record>
+
+    <record id="cu_procedure_action" model="ir.actions.act_window">
+        <field name="name">Type de procédure</field>
+        <field name="res_model">campus_universel.procedure</field>
+        <field name="view_mode">list,kanban,form</field>
         <field name="domain">[('nature','=','template')]</field>
-        <field name="context">{'default_nature':'template'}</field>
+        <field name="context">
+            {'default_nature':'template',
+            'form_view_ref': 'campus_universel.cu_procedure_form_template',
+            'kanban_view_ref': 'campus_universel.cu_procedure_kanban_template',
+            'list_view_ref': 'campus_universel.cu_procedure_list_template'}
+        </field>
         <field name="help" type="html">
             <p>Cette action permet d'afficher les procédures.</p>
         </field>
@@ -42,7 +100,7 @@
         </field>
     </record>
 
-    <record id="cu_procedure_form" model="ir.ui.view">
+    <record id="cu_procedure_form_record" model="ir.ui.view">
         <field name="name">cu_procedure.form</field>
         <field name="model">campus_universel.procedure</field>
         <field name="arch" type="xml">
@@ -53,25 +111,277 @@
                         string="Imprimer"
                         class="oe_highlight"
                         icon="fa-print" />
+                    <field name="statut_trait" widget="statusbar"
+                        statusbar_visible="actif,stop,block,cancel,end" />
+                </header>
+                <sheet>
 
+                    <field name="drapeau_pays" widget="image" class='oe_avatar'
+                        options="{'preview_image': 'drapeau_pays'}" />
+                    <field name="photo" widget="image" class='oe_avatar'
+                        options="{'preview_image': 'photo'}" />
+                    <group>
+                        <h3>
+                            <field name="mat" placeholder='CU0000002' />
+                        </h3>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="name" placeholder='Entrez le nom du candidat' />
+                            <field name="cible_ids" widget='many2many_tags'
+                                options="{'color_field': 'color'}" />
+                            <field name="pays_id" />
+                            <field name="amount_min" />
+                            <field name="amount_max" />
+                            <field name='nature' />
+                        </group>
+                        <group>
+                            <field name='state_client' />
+                            <field name='statut_trait' />
+                            <field name='statut_message' />
+                            <field name='gest_client_id' />
+                            <field name='agent_id' />
+                            <field name="payment_mode_ids" widget='many2many_tags' />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Informations personnelles">
+                            <group>
+                                <group>
+                                    <field name="name" />
+                                    <field name="last_name" />
+                                    <field name="birthday" />
+                                    <field name="nationality" />
+                                    <field name="phone" />
+                                    <field name="email" />
+                                    <field name="address" />
+                                </group>
+                                <group>
+                                    <field name="father_name" />
+                                    <field name="father_profession" />
+                                    <field name="father_contact" />
+                                    <field name="mother_name" />
+                                    <field name="mother_profession" />
+                                    <field name="mother_contact" />
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Page 2 : Informations supplémentaires -->
+                        <page string="Informations supplémentaires">
+                            <group>
+                                <group>
+                                    <field name="info_source" />
+                                    <field name="client_manager_name" />
+                                    <field name="client_manager_contact" />
+                                    <field name="travel_purpose" />
+                                    <field name="study_level" />
+                                    <field name="desired_country" />
+                                </group>
+                                <group>
+                                    <field name="desired_school" />
+                                    <field name="info_source" />
+                                    <field name="client_manager_name" />
+                                    <field name="client_manager_contact" />
+                                    <field name="comments" />
+                                </group>
+                            </group>
+                        </page>
+                        <page name="name" string="Étape du projet">
+                            <button name="%(cu_procedure_etape_action)s"
+                                type="action"
+                                string="Voir les Étapes"
+                                class="oe_highlight"
+                                icon="fa-tasks" />
+                        </page>
+                        <!-- 📄 Onglet Documents de la procédure -->
+                        <page string="Les documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="provenance" />
+                                    <field name="category" />
+                                    <field name="extension" />
+                                    <field name="is_uploaded" />
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- ✅ Onglet Actions de la procédure -->
+                        <page string="Les actions">
+                            <field name="action_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <button name="1"
+                                        type="action"
+                                        string="Voir Tutoriels"
+                                        class="oe_highlight"
+                                        icon="fa-eye" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="name" string="entrées et des sorities">
+                         <field name="transaction_ids">
+                                <list editable="bottom">
+                                    <field name="name" string="Description" />
+                                    <field name="amount" string="Montant" />
+                                    <field name="type" string="Type" />
+                                    <field name="validation_secretaire" string="Sécrétaire" />
+                                    <field name="validation_caissiere" string="Caissiere" />
+                                    <button name="1"
+                                        type="action"
+                                        string="Télecharger"
+                                        class="oe_highlight"
+                                        icon="fa-download" />
+                                    
+                                </list>
+                            </field>
+                            
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True" />
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_form_registration" model="ir.ui.view">
+        <field name="name">cu_procedure.form</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <form string="" class='d-flex'>
+                <header>
+                    <field name="state_client" widget="statusbar"
+                        statusbar_visible="prospect,client" />
+                </header>
+                <sheet>
+                    <field name="photo" widget='image' class='oe_avatar' />
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="last_name" />
+                            <field name="birthday" />
+                            <field name="email" />
+                            <field name="nationality" />
+                            <field name="phone" />
+                            <field name='state_client' />
+                            <field name="user_id" />
+                            <field name="address" />
+                        </group>
+                        <group>
+                            <field name="father_name" />
+                            <field name="father_profession" />
+                            <field name="father_contact" />
+                            <field name="mother_name" />
+                            <field name="mother_profession" />
+                            <field name="mother_contact" />
+                        </group>
+                    </group>
+                    <!-- Début du notebook avec deux pages -->
+                    <notebook>
+                        <!-- Page 2 : Informations supplémentaires -->
+                        <page string="Informations supplémentaires">
+                            <group>
+                                <group>
+                                    <field name="motif_voyage_id" />
+                                    <field name="niveau_etude_id" string="Niveau d\'étude" />
+                                    <field name="diplome_id" string='Dernier diplôme' />
+                                    <field name="mention_id" string='Mention obtenu' />
+                                    <field name="procedure_id"
+                                        domain="[('nature', '=', 'template'),('statut','=','actif')]"
+                                        string='Choix de la procédure' />
+                                </group>
+                                <group>
+                                    <field name="desired_country" string='Destination sollicitée' />
+                                    <field name="filiere_ids" widget='many2many_tags'
+                                        options="{'color_field': 'color'}" class='mt-1' />
+                                    <field name="commercial_id" />
+                                    <field name="gest_client_id" readonly="1" />
+
+                                </group>
+                            </group>
+                            <group>
+                                <field name="info_source" />
+                                <field name="comments" />
+                            </group>
+                        </page>
+                        <page string="Documents du candidat">
+                            <group>
+                                <field name="document_ids">
+                                    <list editable='bottom'>
+                                        <field name="name" />
+                                        <field name="provenance" />
+                                        <field name="file" filename="name" />
+                                        <field name="upload_status" widget='badge'
+                                            decoration-success="is_uploaded"
+                                            decoration-danger="not is_uploaded" />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Compte rendu des consultations">
+                            <group>
+                                <field name="consultation_ids">
+                                    <list>
+                                        <field name="name" />
+                                        <field name="date" />
+                                        <field name="document_ids" />
+                                        <field name="date" string='Prochain rendez-vous' />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Ouverture du dossier">
+                            <group>
+                                <field name="secretary_payment" />
+                                <group string='Confirmer les paiements'>
+                                    <field name="secretary_validation" />
+                                    <field name="caissiere_validation" />
+                                    <button name="action_duplicate_procedure"
+                                        type="object"
+                                        string="Générer la facture"
+                                        class="oe_highlight"
+                                        icon="fa-copy" />
+                                    <button name="action_duplicate_procedure"
+                                        type="object"
+                                        string="Ouverture du Dossier"
+                                        class="oe_highlight"
+                                        icon="fa-copy" />
+                                </group>
+
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True" />
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_form_template" model="ir.ui.view">
+        <field name="name">cu_procedure.form</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <form string="" class='d-flex'>
+                <header>
+                    <button name="creation_procedure"
+                        type="object"
+                        string="Désactiver"
+                        class="oe_highlight"
+                        help='Fermer la procédure'
+                    />
                     <button name="activate_procedure"
                         type="object"
-                        string="Activé"
+                        string="Activer"
                         class="oe_highlight"
                         help='Activer la procédure la procédure'
                     />
-                    <button name="create_procedure"
-                        type="object"
-                        string="Fermé"
-                        class="oe_highlight"
-                        help='Procédure en création' />
                     <button name="block_procedure"
                         type="object"
-                        string="Bloqué"
+                        string="Bloquer"
                         class="oe_highlight"
                         help='Bloquer la procédure' />
-
-
                     <field name="statut" widget="statusbar"
                         statusbar_visible="new,actif,block" />
                 </header>
@@ -82,15 +392,16 @@
                         <field name="name" placeholder='Entrez le nom de la procédure' />
                         <field name="cible_ids" widget='many2many_tags'
                             options="{'color_field': 'color'}" />
-                        <field name="description"
-                            placeholder='Entrez la description de la procédure' />
                         <field name="pays_id" />
-                        <field name="amount_min" />
-                        <field name="amount_max" />
-                        <field name='nature'/>
+
                         <field name="payment_mode_ids" widget='many2many_tags' />
                     </group>
+                    <field name='nature' invisible='1' />
                     <notebook>
+                        <page string="Description">
+                            <field name="description" widget='html'
+                                placeholder='Ajoutez une description ici' />
+                        </page>
                         <page name="name" string="Étape du projet">
                             <button name="%(cu_procedure_etape_action)s"
                                 type="action"
@@ -118,28 +429,181 @@
                                     <field name="name" />
                                     <field name="description" />
                                     <button name="1"
-                                    type="action"
-                                    string="Voir Tutoriels"
-                                    class="oe_highlight"
-                                    icon="fa-eye" />
+                                        type="action"
+                                        string="Télecharger"
+                                        class="oe_highlight"
+                                        icon="fa-download" />
                                 </list>
                             </field>
                         </page>
-                        <page name="name" string="entrées et des sorities">
+                        <page name="name" string="Coût de la procédure">
+                            <field name="payment_mode_ids">
+                                <list>
+                                    <field name="name" />
+                                    <field name="label" />
+                                    <field name="amount" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <chatter reload_on_follower="True" />
+
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_form_client" model="ir.ui.view">
+        <field name="name">cu_procedure.form</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <form create="false" string="" class='d-flex'>
+                <sheet>
+                    <field name="photo" widget='image' class='oe_avatar' />
+                    <group>
+                        <group string='Informations personnelles'>
+                            <field name="name" />
+                            <field name="last_name" />
+                            <field name="user_id" />
+                            <field name="birthday" />
+                            <field name="nationality" />
+                            <field name="phone" />
+                            <field name="email" />
+                            <field name="address" />
+                        </group>
+                        <group string='Informations personnelles'>
+                            <field name="father_name" />
+                            <field name="father_profession" />
+                            <field name="father_contact" />
+                            <field name="mother_name" />
+                            <field name="mother_profession" />
+                            <field name="mother_contact" />
+                        </group>
+                        <group string='Informations personnelles'>
+                            <field name="motif_voyage_id" />
+                            <field name="niveau_etude_id" string="Niveau d\'étude" />
+                            <field name="diplome_id" string='Dernier diplôme' />
+                            <field name="mention_id" string='Mention obtenu' />
+                            <field name="procedure_id"
+                                domain="[('nature', '=', 'template')]"
+                                string='Choix de la procédure' />
+                        </group>
+                        <group string='Informations personnelles'>
+                            <field name="desired_country" string='Destination sollicitée' />
+                            <field name="filiere_ids" widget='many2many_tags'
+                                options="{'color_field': 'color'}" class='mt-1' />
+                            <field name="desired_school" />
+                        </group>
+                    </group>
+                    <!-- Début du notebook avec deux pages -->
+
+                </sheet>
+                <chatter reload_on_follower="True" />
+            </form>
+        </field>
+    </record>
+
+    <record id="cu_procedure_form_gest" model="ir.ui.view">
+        <field name="name">cu_procedure.form</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <form string="" class='d-flex'>
+                <header>
+                    <button name="test_action"
+                        type="object"
+                        string="Imprimer"
+                        class="oe_highlight"
+                        icon="fa-print" />
+
+                    <button name="activate_procedure"
+                        type="object"
+                        string="Activé"
+                        class="oe_highlight"
+                        help='Activer la procédure la procédure'
+                    />
+                    <button name="creation_procedure"
+                        type="object"
+                        string="Fermé"
+                        class="oe_highlight"
+                        help='Procédure en création' />
+                    <button name="block_procedure"
+                        type="object"
+                        string="Bloqué"
+                        class="oe_highlight"
+                        help='Bloquer la procédure' />
+                    <field name="statut" widget="statusbar"
+                        statusbar_visible="new,actif,block" />
+                </header>
+                <sheet>
+                    <field name="drapeau_pays" widget="image" class='oe_avatar'
+                        options="{'preview_image': 'drapeau_pays'}" />
+                    <group>
+                        <field name="name" placeholder='Entrez le nom de la procédure' />
+                        <field name="cible_ids" widget='many2many_tags'
+                            options="{'color_field': 'color'}" />
+                        <field name="pays_id" />
+                        <field name="payment_mode_ids" widget='many2many_tags' />
+                    </group>
+                    <field name='nature' invisible='1' />
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" widget='html'
+                                placeholder='Ajoutez une description ici' />
+                        </page>
+                        <page name="name" string="Étape du projet">
                             <button name="%(cu_procedure_etape_action)s"
                                 type="action"
                                 string="Voir les Étapes"
                                 class="oe_highlight"
                                 icon="fa-tasks" />
                         </page>
+                        <!-- 📄 Onglet Documents de la procédure -->
+                        <page string="Les documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="provenance" />
+                                    <field name="category" />
+                                    <field name="extension" />
+                                    <field name="url" />
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- ✅ Onglet Actions de la procédure -->
+                        <page string="Les actions">
+                            <field name="action_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <button name="1"
+                                        type="action"
+                                        string="Voir Tutoriels"
+                                        class="oe_highlight"
+                                        icon="fa-eye" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="name" string="Coût de la procédure">
+                            <field name="payment_mode_ids">
+                                <list>
+                                    <field name="name" />
+                                    <field name="amount" />
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
+
                 </sheet>
+                <chatter reload_on_follower="True" />
+
             </form>
         </field>
     </record>
 
 
-    <record id="cu_procedure_liste" model="ir.ui.view">
+    <record id="cu_procedure_list_record" model="ir.ui.view">
         <field name="name">cu_procedure.list</field>
         <field name="model">campus_universel.procedure</field>
         <field name="arch" type="xml">
@@ -155,29 +619,241 @@
         </field>
     </record>
 
-    <record id="cu_procedure_kanban" model="ir.ui.view">
+    <record id="cu_procedure_list_template" model="ir.ui.view">
+        <field name="name">cu_procedure.list</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="cible_ids" widget='many2many_tags' />
+
+                <field name="drapeau_pays" widget="image" class='oe_avatar custom_image2'
+                    options="{'preview_image': 'drapeau_pays'}" />
+                <field name="pays_id" />
+                <field name="payment_mode_ids" widget='many2many_tags' />
+                <field name="statut" widget='badge' />
+            </list>
+        </field>
+    </record>
+
+    <record id="cu_procedure_list_registration" model="ir.ui.view">
+        <field name="name">cu_procedure.list</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="last_name" />
+                <field name="phone" />
+                <field name="email" />
+                <field name="motif_voyage_id" />
+                <field name="commercial_id" />
+                <field name="state_client" widget='badge' />
+
+            </list>
+        </field>
+    </record>
+
+    <record id="cu_procedure_list_client" model="ir.ui.view">
+        <field name="name">cu_procedure.list</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <list string="" create="false" edit="false">
+                <field name="name" />
+                <field name="pays_id" />
+                <field name="motif_voyage_id" />
+                <field name="phone" />
+                <field name="email" />
+                <field name="statut_trait" widget='badge' />
+                <field name="address" />
+                <field name="nationality" />
+                <field name="drapeau_pays" widget="image" class='oe_avatar custom_image'
+                    options="{'preview_image': 'drapeau_pays'}" />
+            </list>
+        </field>
+    </record>
+
+    <record id="cu_procedure_list_gest" model="ir.ui.view">
+        <field name="name">cu_procedure.list</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name" />
+                <field name="cible_ids" widget='many2many_tags' />
+                <field name="pays_id" />
+                <field name="payment_mode_ids" widget='many2many_tags' />
+                <field name="drapeau_pays" widget="image" class='oe_avatar custom_image'
+                    options="{'preview_image': 'drapeau_pays'}" />
+
+            </list>
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban_record" model="ir.ui.view">
         <field name="name">cu_procedure.kanban</field>
         <field name="model">campus_universel.procedure</field>
         <field name="arch" type="xml">
             <kanban>
                 <templates>
-
                     <t t-name="kanban-box">
                         <div class='d-flex flex-row align-items-center gap-3 p-2'>
                             <div class="d-flex align-items-center justify-content-center"
                                 style="width: 50px; height: 50px;">
-                                <field name="drapeau_pays" widget="image"
-                                    class='oe_avatar custom_image'
-                                    options="{'preview_image': 'drapeau_pays'}" />
+                                <field name="photo" widget="image"
+                                    class='custom_image2'
+                                    options="{'preview_image': 'photo'}" />
                             </div>
                             <div class="d-flex flex-column">
                                 <strong class='text-primary'>
                                     <field name="name" />
                                 </strong>
+                                <field name="mat" />
+                                <field name="opened_date" />
+                                <field name="progress" widget="progressbar" />
+                                <!-- Popover pour afficher la légende des couleurs -->
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban_registration" model="ir.ui.view">
+        <field name="name">cu_procedure.kanban</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class='d-flex flex-row align-items-center gap-3 p-2'>
+                            <div class="d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 60px;">
+                                <field name="photo" widget="image"
+                                    class='oe_avatar custom_image2'
+                                    options="{'preview_image': 'photo'}" />
+                            </div>
+                            <div class="d-flex flex-column">
+                                <strong class='text-primary'>
+                                    <field name="mat" />
+                                </strong>
+                                <field name="name" />
                                 <field name="cible_ids" widget='many2many_tags'
                                     options="{'color_field': 'color'}" class='mt-1' />
                                 <field name="pays_id" />
                                 <field name="color" widget="color_picker" />
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban_template" model="ir.ui.view">
+        <field name="name">cu_procedure.kanban</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color">
+                <templates>
+
+                    <t t-name="kanban-box">
+                        <div class='d-flex  align-items-center gap-3 p-2'>
+                            <div class="d-flex flex-column "
+                                style="width: 80px; height: 80px;">
+                                <field name="drapeau_pays" widget="image"
+                                    class='oe_avatar custom_image'
+                                    options="{'preview_image': 'drapeau_pays'}" />
+                                <span style="font-size:12px;">
+                                    <field name="pays_id" />
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <h3 class='text-primary'>
+                                    <field name="name" />
+                                </h3>
+                                <field name="cible_ids" widget='many2many_tags'
+                                    options="{'color_field': 'color'}" class='mt-1' />
+                                <div style="display : flex; gap:2;">
+                                    <field name="etape_count" />
+                                    <span style="margin-left:2px;">Étapes</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban_client" model="ir.ui.view">
+        <field name="name">cu_procedure.kanban</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color">
+                <templates>
+
+                    <t t-name="kanban-box">
+                        <div class='d-flex  align-items-center gap-3 p-2'>
+                            <div class="d-flex flex-column "
+                                style="width: 80px; height: 80px;">
+                                <field name="drapeau_pays" widget="image"
+                                    class='oe_avatar custom_image'
+                                    options="{'preview_image': 'drapeau_pays'}" />
+                                <span style="font-size:12px;">
+                                    <field name="pays_id" />
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <h3 class='text-primary'>
+                                    <field name="name" />
+                                </h3>
+                                <field name="cible_ids" widget='many2many_tags'
+                                    options="{'color_field': 'color'}" class='mt-1' />
+                                <div style="display : flex; gap:2;">
+                                    <field name="etape_count" />
+                                    <span style="margin-left:2px;">Étapes</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="cu_procedure_kanban_gest" model="ir.ui.view">
+        <field name="name">cu_procedure.kanban</field>
+        <field name="model">campus_universel.procedure</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color">
+                <templates>
+
+                    <t t-name="kanban-box">
+                        <div class='d-flex  align-items-center gap-3 p-2'>
+                            <div class="d-flex flex-column "
+                                style="width: 80px; height: 80px;">
+                                <field name="drapeau_pays" widget="image"
+                                    class='oe_avatar custom_image'
+                                    options="{'preview_image': 'drapeau_pays'}" />
+                                <span style="font-size:12px;">
+                                    <field name="pays_id" />
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <h3 class='text-primary'>
+                                    <field name="name" />
+                                </h3>
+                                <field name="cible_ids" widget='many2many_tags'
+                                    options="{'color_field': 'color'}" class='mt-1' />
+                                <div style="display : flex; gap:2;">
+                                    <field name="etape_count" />
+                                    <span style="margin-left:2px;">Étapes</span>
+                                </div>
                             </div>
 
                         </div>

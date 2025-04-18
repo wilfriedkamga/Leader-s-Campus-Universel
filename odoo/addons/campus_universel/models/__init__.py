@@ -7,10 +7,15 @@ from . import transaction
 from . import payment_operation
 from . import phase
 from . import etape
-from . import registration
 from . import document
 from . import action
 from . import tutoriel
-from . import traitement
-from . import etape_reel
-from . import phase_reel
+from . import commercial
+from . import filiere
+from . import niveauEtude
+from . import diplome
+from . import mention
+from . import motifVoyage
+from . import consultation
+from . import res_users
+

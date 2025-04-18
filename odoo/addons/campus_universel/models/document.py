@@ -9,7 +9,7 @@ class ProcedureEtapeDocument(models.Model):
     name = fields.Char(string='Nom du document')
     url = fields.Char(string='Lien externe')
     file  = fields.Binary()
-    is_uploaded  = fields.Boolean(default=False)
+    is_uploaded = fields.Boolean(string="Téléchargé ?", compute="_compute_upload_status", store=True)
     etape_id = fields.Many2one('campus_universel.procedure.etape', string='Étape')
     # Lien vers la procédure (Nouveau champ)
     procedure_id = fields.Many2one(
@@ -18,11 +18,51 @@ class ProcedureEtapeDocument(models.Model):
         compute='_compute_procedure',
         store=True
     )
+
+    procedure_registration_id = fields.Many2one(
+        'campus_universel.procedure',
+        string="Procédure",
+        compute='_compute_procedure',
+        store=True
+    )
+    
+
+    upload_status = fields.Selection([
+        ('success', 'Ok'),
+        ('fail', 'No')
+    ], string="Statut", compute="_compute_upload_status", store=True)
+
+    @api.depends('file')
+    def _compute_upload_status(self):
+        for record in self:
+            if record.file:
+                record.is_uploaded = True
+                record.upload_status = 'success'
+            else:
+                record.is_uploaded = False
+                record.upload_status = 'fail'
     
     def _compute_procedure(self):
         """Récupérer la procédure associée à partir de l'étape"""
         for action in self:
             action.procedure_id = action.etape_id.procedure_id if action.etape_id else False
+    def _compute_file_url(self):
+        for record in self:
+            if record.file:
+                record.file_url = f"/web/content/{record.id}?download=false"
+            else:
+                record.file_url = ""
+
+    def action_view_document(self):
+        """Ouvre le fichier dans un nouvel onglet s'il est disponible."""
+        self.ensure_one()
+        if not self.file:
+            return {'type': 'ir.actions.act_window_close'}
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/{self.id}?download=true",
+            'target': 'new',
+        }
     
     provenance = fields.Selection([
     ('candidat', 'Fourni par le candidat'),
@@ -74,3 +114,5 @@ class ProcedureEtapeDocument(models.Model):
                 self.extension = extensions[0]  
             else:
                 self.extension = False
+    
+    

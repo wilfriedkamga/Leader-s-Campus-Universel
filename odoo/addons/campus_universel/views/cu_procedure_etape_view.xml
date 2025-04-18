@@ -11,8 +11,8 @@
             <p>Cliquez ici pour ajouter une nouvelle Étapes.</p>
         </field>
     </record>
-    
-     <record id="cu_procedure_etape_action2" model="ir.actions.act_window">
+
+    <record id="cu_procedure_etape_action2" model="ir.actions.act_window">
         <field name="name">Étapes</field>
         <field name="res_model">campus_universel.procedure.etape</field>
         <field name="view_mode">kanban,list,form</field>
@@ -38,61 +38,80 @@
     </record>
 
     <record id="cu_procedure_etape_form" model="ir.ui.view">
-    <field name="name">cu_procedure_etape.form</field>
-    <field name="model">campus_universel.procedure.etape</field>
-    <field name="arch" type="xml">
-        <form string="Étape de procédure">
-            <header>
-            </header>
-            <sheet>
-                <group>
-                    <field name="name"/>
-                    <field name="phase_id"/>
-                    <field name="state"/>
-                    <field name="procedure_id"/>
-                    <field name="progress" widget="progressbar"/>
-                </group>
+        <field name="name">cu_procedure_etape.form</field>
+        <field name="model">campus_universel.procedure.etape</field>
+        <field name="arch" type="xml">
+            <form string="Étape de procédure">
+                <header>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="wait,start,end,cancel" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="details" />
+                        <field name="phase_id" />
+                        <field name="state" />
+                        <field name="procedure_id" />
+                        <field name="progress" />
+                        <field name="progress" widget="progressbar" />
+                    </group>
 
-                <notebook>
-                    <!-- Onglet Documents -->
-                    <page string="Documents">
-                        <field name="document_ids">
-                            <list editable="bottom">
-                                <field name="name"/>
-                                <field name="provenance"/>
-                                <field name="category"/>
-                                <field name="extension"/>
-                                <field name="url"/>
-                            </list>
-                        </field>
-                    </page>
+                    <notebook>
+                        <!-- Onglet Documents -->
+                        <page string="Documents">
+                            <field name="document2_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="procedure_id" />
+                                    <field name="provenance" />
+                                    <field name="category" />
+                                    <field name="extension" />
+                                    <field name="is_uploaded"
+                                        optional="'procedure_id.nature'='record'" />
+                                </list>
+                            </field>
+                        </page>
 
-                    <!-- Onglet Actions -->
-                    <page string="Actions">
-                        <field name="action_ids">
-                            <list>
-                                <field name="name"/>
-                                <field name="description"/>
-                            </list>
-                        </field>
-                    </page>
+                        <!-- Onglet Actions -->
+                        <page string="Actions">
+                            <field name="action_ids">
+                                <list>
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <button name="1"
+                                        type="action"
+                                        string="Télécharger"
+                                        class="oe_highlight"
+                                        icon="fa-download" />
+                                </list>
+                            </field>
+                        </page>
 
-                     <page string="Transactions">
-                        <field name="transaction_ids">
-                            <list editable="bottom">
-                                <field name="name" string="Description"/>
-                                <field name="amount" string="Montant"/>
-                                <field name="type" string="Type"/>
-                                <field name="payment_operation_id" string="Opération financière"/>
-                            </list>
-                        </field>
-                    </page>
-                </notebook>
+                        <page string="Transactions">
+                            <field name="transaction_ids">
+                                <list editable="bottom">
+                                    <field name="name" string="Description" />
+                                    <field name="amount" string="Montant" />
+                                    <field name="type" string="Type" />
+                                    <field name="validation_secretaire" string="Sécrétaire" />
+                                    <field name="validation_caissiere" string="Caissiere" />
+                                    <button name="1"
+                                        type="action"
+                                        string="Facture"
+                                        class="oe_highlight"
+                                        icon="fa-download" 
+                                        attrs="{'invisible': [('validation_caissiere', '=', False)]}" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
 
-            </sheet>
-        </form>
-    </field>
-</record>
+                </sheet>
+                <chatter reload_on_follower="True" />
+            </form>
+        </field>
+    </record>
 
 
     <record id="cu_procedure_list" model="ir.ui.view">
@@ -111,23 +130,19 @@
         <field name="arch" type="xml">
 
             <kanban highlight_color='color' default_group_by='phase_id'>
-                <progressbar field="state" sum_field=""
+                <progressbar field="state"
                     colors='{"on_track": "success", "at_risk": "warning", "off_track": "danger", "on_hold": "info", "done": "purple"}' />
 
                 <templates>
                     <t t-name="kanban-box">
-                        
-                            <div class='oe_kanban_global_click'>
+
+                        <div class='oe_kanban_global_click'>
+                            <h4>
                                 <field name="name" />
-                                <field name="state" />
-                                <button type="button"
-                                    name='delete'
-                                    class="btn btn-danger btn-sm o_delete_kanban"
-                                    t-att-data-id="record.id.raw"
-                                    title="Supprimer">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
+                            </h4>
+                            <field name="details" />
+
+                        </div>
                     </t>
                 </templates>
             </kanban>

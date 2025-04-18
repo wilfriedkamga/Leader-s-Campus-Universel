@@ -12,11 +12,12 @@
       
         'security/ir.model.access.csv',
         'views/estate_property_view.xml',
-        'views/estate_menu_view.xml',
         'views/estate_property_type_view.xml',
         'views/estate_property_tag_view.xml',
-        'views/res_users_view.xml'
-        
+        'views/estate_menu_view.xml',
+        'views/res_users_view.xml',
+        'report/estate_property_reports.xml',
+        'report/estate_property_templates.xml' 
     ],
    
     'auto_install':False,

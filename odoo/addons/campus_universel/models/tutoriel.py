@@ -9,7 +9,8 @@ class ProcedureTutoriel(models.Model):
     action_id = fields.Many2one(
         'campus_universel.procedure.action',
         string='Action',
-        required=True
+        required=True,
+        ondelete='cascade'
     )
     type = fields.Selection([
         ('video', 'Vidéo'),
